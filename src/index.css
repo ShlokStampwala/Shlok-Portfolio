@@ -1,0 +1,99 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* ===================================================
+     LIGHT MODE (default)
+     =================================================== */
+  :root {
+    --bg:              #fdf8f5;
+    --bg-section:      #ffffff;
+    --text-primary:    #0f172a;
+    --text-secondary:  #475569;
+    --text-muted:      #94a3b8;
+    --border:          rgba(0,0,0,0.08);
+    --glass-bg:        rgba(255,255,255,0.6);
+    --glass-border:    rgba(0,0,0,0.08);
+    --scrollbar-thumb: rgba(0,0,0,0.15);
+    --neon:            #00c2cc;   /* slightly darker cyan for visibility on white */
+  }
+
+  /* ===================================================
+     DARK MODE
+     =================================================== */
+  .dark {
+    --bg:              #080808;
+    --bg-section:      #0a0a0a;
+    --text-primary:    #f8fafc;
+    --text-secondary:  rgba(248,250,252,0.6);
+    --text-muted:      rgba(248,250,252,0.35);
+    --border:          rgba(255,255,255,0.08);
+    --glass-bg:        rgba(0,0,0,0.4);
+    --glass-border:    rgba(255,255,255,0.10);
+    --scrollbar-thumb: rgba(255,255,255,0.15);
+    --neon:            #00f2ff;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--text-primary);
+    @apply font-sans antialiased overflow-x-hidden;
+    transition: background-color 0.6s ease, color 0.6s ease;
+  }
+}
+
+@layer components {
+  /* Glass card - auto-switches by CSS var */
+  .glass {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    @apply backdrop-blur-xl;
+  }
+
+  /* Standard text helpers using CSS vars */
+  .t-primary   { color: var(--text-primary); }
+  .t-secondary { color: var(--text-secondary); }
+  .t-muted     { color: var(--text-muted); }
+  .t-border    { border-color: var(--border); }
+
+  .glow-text {
+    @apply transition-all duration-300;
+    color: var(--text-primary);
+    text-shadow: none;
+  }
+
+  .glow-text:hover {
+    text-shadow: 0 0 20px rgba(191, 0, 255, 0.6);
+  }
+
+  .dark .glow-text {
+    text-shadow: 0 0 10px rgba(0, 242, 255, 0.4);
+  }
+
+  /* Input overrides */
+  input, textarea {
+    background: color-mix(in srgb, var(--bg-section) 80%, transparent);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    @apply rounded-xl px-5 py-4 w-full outline-none transition-all duration-300;
+  }
+  input:focus, textarea:focus {
+    border-color: #00f2ff80;
+  }
+  input::placeholder, textarea::placeholder {
+    color: var(--text-muted);
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 999px;
+}
