@@ -16,7 +16,14 @@ const Contact = () => {
     e.preventDefault();
     setStatus('loading');
     try {
-      const response = await axios.post('/api/contact', formData);
+      // Send data to Web3Forms API instead of our backend
+      const payload = {
+        ...formData,
+        access_key: "2607e3b0-9b82-44cd-a43a-112c08e2b316"
+      };
+
+      const response = await axios.post('https://api.web3forms.com/submit', payload);
+
       if (response.data.success) {
         setStatus('success');
         setFormData({ name: '', email: '', message: '' });
@@ -26,7 +33,7 @@ const Contact = () => {
       }
     } catch (err) {
       setStatus('error');
-      setErrorMessage(err.response?.data?.message || 'Failed to send. Is the server running?');
+      setErrorMessage(err.response?.data?.message || err.message || 'Failed to send. Please try again.');
       setTimeout(() => setStatus('idle'), 5000);
     }
   };
